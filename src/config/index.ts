@@ -5,9 +5,11 @@ dotenv.config();
 const {
   env: {
     PORT,
+    NODE_ENV
   },
 } = process;
 
 export default Object.freeze({
-    PORT
+  PORT,
+  NODE_ENV
 });

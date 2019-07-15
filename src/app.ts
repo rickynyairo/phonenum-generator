@@ -6,14 +6,14 @@ import middleware from "./middleware";
 import errorHandlers from "./middleware/errorHandlers";
 import config from "./config";
 
-process.on("uncaughtException", e => {
-    console.log(e);
-    process.exit(1);
+process.on("uncaughtException", (e) => {
+  console.log(e);
+  process.exit(1);
 });
 
-process.on("unhandledRejection", e => {
-    console.log(e);
-    process.exit(1);
+process.on("unhandledRejection", (e) => {
+  console.log(e);
+  process.exit(1);
 });
 
 const app = express();
