@@ -1,6 +1,6 @@
 import { Router } from "express";
-import swaggerUi from "swagger-ui-express";
-import swaggerDocument from "../config/swagger.json";
+import swaggerUiExpress from "swagger-ui-express";
+import swaggerJson from "../config/swagger.json";
 
 export const handleAPIDocs = (router: Router) =>
-  router.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  router.use("/api-docs", swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerJson));
