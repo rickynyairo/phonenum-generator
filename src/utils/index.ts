@@ -8,16 +8,10 @@ export const applyMiddleware = (middleware: Wrapper[], router: Router) => {
   }
 };
 
-type Handler = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => Promise<void> | void;
-
 interface Route {
   path: string;
   method: string;
-  handler: Handler | Handler[];
+  handler: Function | Function[];
 }
 
 export const applyRoutes = (routes: Route[], router: Router) => {

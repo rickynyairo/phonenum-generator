@@ -33,6 +33,28 @@
             }
           ]
         }
+      },
+      "/numbers/generate": {
+        "post": {
+          "tags": ["Generate"],
+          "summary": "Generate random numbers",
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad request"
+            }
+          },
+          "content": {
+            "application/json": {}
+          },
+          "parameters": [
+            {
+              "number": "number of numbers to generate"
+            }
+          ]
+        }
       }
     }
 }  

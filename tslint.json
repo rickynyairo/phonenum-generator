@@ -36,7 +36,7 @@
       "never-prefix"
     ],
     "interface-over-type-literal": true,
-    "jsdoc-format": true,
+    "jsdoc-format": false,
     "linebreak-style": [
       true,
       "CRLF"
