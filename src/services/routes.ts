@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { checkSearchParams } from "../middleware/checks";
+import { GeneratorController } from "./controllers";
 
 export default [
   {
@@ -19,5 +20,10 @@ export default [
         // TO-DO
       }
     ]
+  },
+  {
+    path: "/api/v1/numbers/generate",
+    method: "post",
+    handler: GeneratorController.generateNumbers
   }
 ];

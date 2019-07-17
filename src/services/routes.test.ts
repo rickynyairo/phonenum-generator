@@ -33,4 +33,28 @@ describe("routes", () => {
     const response = await supertest(app).get("/api/v1/search?q=");
     expect(response.status).toEqual(400);
   });
+
+  test("validates post data", async () => {
+    const response = await supertest(app)
+      .post("/api/v1/numbers/generate")
+      .send({ number: "string" })
+      .set("Accept", "application/json");
+    expect(response.status).toEqual(400);
+  });
+
+  test("redirects to api-docs", async () => {
+    const response = await supertest(app).get("/");
+    expect(response.status).toEqual(302); // redirect status code
+  });
+
+  test("generates random phone numbers", async () => {
+    const response = await supertest(app)
+      .post("/api/v1/numbers/generate")
+      .send({ number: 20 })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200);
+    expect(response.status).toEqual(200);
+    expect(response.body.numbers.length).toEqual(20);
+  });
 });
