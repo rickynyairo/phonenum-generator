@@ -6,8 +6,8 @@ export const checkSearchParams = (
   res: Response,
   next: NextFunction
 ) => {
-  if (!req.query.q) {
-    throw new HTTP400Error("Missing q parameter");
+  if (!req.query.q && !req.query.sort) {
+    throw new HTTP400Error("Missing a query parameter");
   } else {
     next();
   }

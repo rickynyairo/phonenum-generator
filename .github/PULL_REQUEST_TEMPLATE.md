@@ -2,25 +2,9 @@
 
 
 
-### Description of Task to be completed
-
-
-
-### How should this be manually tested?
-
-
-
-### Any background context you want to provide?
-
-
-
 ### What are the relevant pivotal tracker stories?
 
 [#id](https://www.pivotaltracker.com/n/projects/2371196/<id>)
-
-### Screenshots (if appropriate)
-
-
 
 ### Checklist
 

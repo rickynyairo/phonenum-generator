@@ -18,9 +18,5 @@ export const clientError = (err: Error, res: Response, next: NextFunction) => {
 export const serverError = (err: Error, res: Response, _next: NextFunction) => {
   // console.error(err);
   // add error logging service
-  if (config.NODE_ENV === "production") {
-    res.status(500).send("Internal Server Error");
-  } else {
-    res.status(500).send(err.stack);
-  }
+  return res.status(500).send(err.stack);
 };

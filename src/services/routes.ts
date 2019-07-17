@@ -25,5 +25,13 @@ export default [
     path: "/api/v1/numbers/generate",
     method: "post",
     handler: GeneratorController.generateNumbers
+  },
+  {
+    path: "/api/v1/numbers",
+    method: "get",
+    handler: [
+      checkSearchParams,
+      GeneratorController.sortNumbers
+    ]
   }
 ];
