@@ -4,3 +4,8 @@
 
 # Random Phone Number Generator
 An API to generate phone numbers randomly
+
+## Hosting
+
+This Project has been hosted on heroku:
+`https://phonenumber-generator.herokuapp.com/api/v1`
