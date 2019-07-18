@@ -44,7 +44,7 @@ export class GeneratorController {
   * @returns {object} the object contains a list of the sorted numbers
   */
   static sortNumbers(req: Request, res: Response): Response {
-    const currentData = JSON.parse(
+    const { phoneNumbers } = JSON.parse(
       readFileSync("src/dataStore.json", "utf-8")
     );
     const { sort } = req.query;
@@ -54,14 +54,28 @@ export class GeneratorController {
         message: "Please specify sorting order as either 'desc' or 'asc'"
       });
     }
-    currentData.phoneNumbers.sort(
-      (num1: number, num2: number) => {
-        if (sort === "asc") return num1 - num2;
-        return num2 - num1;
-      });
+    phoneNumbers.sort(
+      (num1: number, num2: number) =>
+        sort === "asc"
+        ? num1 - num2
+        : num2 - num1
+
+    );
+    const maximum =
+      sort === "asc"
+      ? phoneNumbers[phoneNumbers.length - 1]
+      : phoneNumbers[0]
+    ;
+    const minimum =
+      sort === "asc"
+      ? phoneNumbers[0]
+      : phoneNumbers[phoneNumbers.length - 1]
+    ;
     const responseObject =  {
-      totalGenerated: currentData.phoneNumbers.length,
-      numbers: GeneratorController.addZeros(currentData.phoneNumbers),
+      minimum: `${minimum}`.padStart(10, "0"),
+      maximum: `${maximum}`.padStart(10, "0"),
+      totalGenerated: phoneNumbers.length,
+      numbers: GeneratorController.addZeros(phoneNumbers),
     };
     return res.status(200).send(responseObject);
   }
