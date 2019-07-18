@@ -8,9 +8,9 @@
     "schemes": ["http"],
     "produces": ["application/json"],
     "paths": {
-      "/search": {
+      "/numbers": {
         "get": {
-          "tags": ["Search"],
+          "tags": ["Sort"],
           "summary": "Make a specified query to the app using query parameters",
           "responses": {
             "200": {
@@ -25,10 +25,10 @@
           },
           "parameters": [
             {
-              "name": "q",
+              "name": "sort",
               "in": "query",
-              "description": "Specifies the query string",
-              "required": true,
+              "description": "Specifies the order of sorting numbers",
+              "required": false,
               "type": "string"
             }
           ]
@@ -39,8 +39,8 @@
           "tags": ["Generate"],
           "summary": "Generate random numbers",
           "responses": {
-            "200": {
-              "description": "OK"
+            "201": {
+              "description": "Created"
             },
             "400": {
               "description": "Bad request"
