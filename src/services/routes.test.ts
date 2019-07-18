@@ -70,10 +70,12 @@ describe("routes", () => {
     const sortAsc = await supertest(app)
       .get("/api/v1/numbers?sort=asc");
     expect(sortAsc.status).toEqual(200);
-    const numbersAsc = sortAsc.body.numbers;
-    const { 0 : min , [numbersAsc.length - 1] : max } = numbersAsc;
+    const { numbers, minimum, maximum } = sortAsc.body;
+    // get first and last array elements to confirm correct sorting
+    const { 0 : min , [numbers.length - 1] : max } = numbers;
     expect(Number(min)).toBeLessThan(Number(max));
-
+    // test that the API resoinds with correct min and max values
+    expect(Number(minimum)).toBeLessThan(Number(maximum));
     const badParam = await supertest(app)
       .get("/api/v1/numbers?sort=XXX")
       .expect(400);
