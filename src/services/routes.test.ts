@@ -25,13 +25,8 @@ describe("routes", () => {
   });
 
   test("a non-existing api route", async () => {
-    const response = await supertest(app).get("/api/v11/search");
+    const response = await supertest(app).get("/api/doesnotexist");
     expect(response.status).toEqual(404);
-  });
-
-  test("an empty string", async () => {
-    const response = await supertest(app).get("/api/v1/search?q=");
-    expect(response.status).toEqual(400);
   });
 
   test("validates post data", async () => {
@@ -56,9 +51,14 @@ describe("routes", () => {
       .expect(201);
     expect(response.status).toEqual(201);
     expect(response.body.numbers.length).toEqual(20);
+    // test that it can return unsorted numbers
+    const unsorted = await supertest(app)
+      .get("/api/v1/numbers");
+    expect(unsorted.status).toEqual(200);
+    expect(unsorted.body.numbers.length).toBeGreaterThan(4);
   });
 
-  test("sorts generated numbers", async () => {
+  test("returns generated numbers (sorted and unsorted)", async () => {
     const generate = await supertest(app)
       .post("/api/v1/numbers/generate")
       .send({ number: 5 })
@@ -66,7 +66,6 @@ describe("routes", () => {
       .expect("Content-Type", /json/)
       .expect(201);
     expect(generate.status).toEqual(201);
-
     const sortAsc = await supertest(app)
       .get("/api/v1/numbers?sort=asc");
     expect(sortAsc.status).toEqual(200);
@@ -75,6 +74,9 @@ describe("routes", () => {
     const { 0 : min , [numbers.length - 1] : max } = numbers;
     expect(Number(min)).toBeLessThan(Number(max));
     // test that the API resoinds with correct min and max values
+    const sortDesc = await supertest(app)
+      .get("/api/v1/numbers?sort=desc");
+    expect(sortDesc.status).toEqual(200);
     expect(Number(minimum)).toBeLessThan(Number(maximum));
     const badParam = await supertest(app)
       .get("/api/v1/numbers?sort=XXX")

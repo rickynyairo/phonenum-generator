@@ -1,12 +1,8 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { GenerateNumbersValidator, validateRequest } from "./validators";
 import { readFileSync, writeFile } from "fs";
-// import { SortNumbers } from "./interfaces";
+
 export class GeneratorController {
-  numberOfGeneratedNumbers: number;
-  constructor() {
-    this.numberOfGeneratedNumbers = 0;
-  }
   /**
   * @description Generates a list of random phone numbers
   * @param {number} num The number of phone numbers to be generated
@@ -16,7 +12,7 @@ export class GeneratorController {
   static async generateNumbers(req: Request, res: Response) {
     const numbers: number[] = [];
     let generatedNumber: number;
-    const validationErrors  = await validateRequest(
+    const validationErrors = await validateRequest(
       GenerateNumbersValidator,
       req.body
     );
@@ -31,7 +27,7 @@ export class GeneratorController {
       // }
     }
     const totalGenerated = GeneratorController.saveToFile(numbers);
-    const responseObject =  {
+    const responseObject = {
       totalGenerated,
       dateGenerated: new Date(),
       numbers: GeneratorController.addZeros(numbers),
@@ -49,7 +45,7 @@ export class GeneratorController {
     );
     const { sort } = req.query;
     // sort the numbers based on the query parameter
-    if (!["asc", "desc"].includes(sort)) {
+    if (!sort || !["asc", "desc"].includes(sort)) {
       return res.status(400).send({
         message: "Please specify sorting order as either 'desc' or 'asc'"
       });
@@ -57,23 +53,43 @@ export class GeneratorController {
     phoneNumbers.sort(
       (num1: number, num2: number) =>
         sort === "asc"
-        ? num1 - num2
-        : num2 - num1
+          ? num1 - num2
+          : num2 - num1
 
     );
     const maximum =
       sort === "asc"
-      ? phoneNumbers[phoneNumbers.length - 1]
-      : phoneNumbers[0]
+        ? phoneNumbers[phoneNumbers.length - 1]
+        : phoneNumbers[0]
     ;
     const minimum =
       sort === "asc"
-      ? phoneNumbers[0]
-      : phoneNumbers[phoneNumbers.length - 1]
+        ? phoneNumbers[0]
+        : phoneNumbers[phoneNumbers.length - 1]
     ;
-    const responseObject =  {
+    const responseObject = {
       minimum: `${minimum}`.padStart(10, "0"),
       maximum: `${maximum}`.padStart(10, "0"),
+      totalGenerated: phoneNumbers.length,
+      numbers: GeneratorController.addZeros(phoneNumbers),
+    };
+    return res.status(200).send(responseObject);
+  }
+  /**
+  * @description Returns the list of sorted numbers based on query
+  * @param {sort} asc_desc The order in which to sort the numbers
+  * @returns {object} the object contains a list of the sorted numbers
+  */
+  static allNumbers(req: Request, res: Response, next: NextFunction): Response | void {
+    // console.log("here>>>>> ", req.query.length);
+    if (Object.keys(req.query).length > 0) {
+      // there are query parameters
+      return next();
+    }
+    const { phoneNumbers } = JSON.parse(
+      readFileSync("src/dataStore.json", "utf-8")
+    );
+    const responseObject = {
       totalGenerated: phoneNumbers.length,
       numbers: GeneratorController.addZeros(phoneNumbers),
     };

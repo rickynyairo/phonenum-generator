@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/rickynyairo/phonenum-generator/badge.svg?branch=develop)](https://coveralls.io/github/rickynyairo/phonenum-generator?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/rickynyairo/phonenum-generator/badge.svg?branch=develop)](https://coveralls.io/github/rickynyairo/phonenum-generator)
 
 [![CircleCI](https://circleci.com/gh/rickynyairo/phonenum-generator.svg?style=svg)](https://circleci.com/gh/rickynyairo/phonenum-generator)
 
