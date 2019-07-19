@@ -2,6 +2,8 @@
 
 [![CircleCI](https://circleci.com/gh/rickynyairo/phonenum-generator.svg?style=svg)](https://circleci.com/gh/rickynyairo/phonenum-generator)
 
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/b7238391b81aabbd45c5#?env%5BHeroku-phonenumber%5D=W3sia2V5IjoiVVJMIiwidmFsdWUiOiJodHRwczovL3Bob25lbnVtYmVyLWdlbmVyYXRvci5oZXJva3VhcHAuY29tIiwiZW5hYmxlZCI6dHJ1ZX1d)
+
 # Random Phone Number Generator
 An API to generate phone numbers randomly
 
@@ -9,6 +11,10 @@ An API to generate phone numbers randomly
 
 This Project has been hosted on heroku:
 `https://phonenumber-generator.herokuapp.com/api/v1`
+
+## Swagger Documentation
+
+[Swagger Docs](https://phonenumber-generator.herokuapp.com/api-docs)
 
 ### Features!
 
@@ -28,9 +34,18 @@ $ yarn install
 $ run `yarn run dev` and navigate to `http://localhost:{PORT}/`
 ```
 
-## Running unit tests
+### Running unit tests
 
 - Run `yarn run test` to run the unit tests
+
+### Endpoints
+
+| VERB   | URL                                | ACTION                                     |
+| ------ | ---------------------------------- | ------------------------------------------ |
+| POST   | /api/v1/numbers/generate           | Generate a number of random phone numbers  |
+| GET    | /api/v1/numbers                    | Get all generated numbers                  |
+| GET    | /api/v1/numbers?sort=asc           | Sort numbers in ascending order            |
+| GET    | /api/v1/numbers?sort=desc          | Sort numbers in descending order           |
 
 ### Future Improvements
 
